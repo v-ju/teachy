@@ -1,19 +1,13 @@
 import express from 'express'
-import { signup } from './controllers/userController';
+import userRouter from './routes/user';
+import roomRouter from './routes/rooms';
 
 const app = express();
+app.use(express.json())
 
+app.use('', userRouter)
 
-app.post('/signup',signup)
-
-app.post('/signin')
-
-app.post('/refresh')
-
-app.post('/room')
-
-app.get('/room')
-
+app.use('/dashboard', roomRouter)
 
 
 

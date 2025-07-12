@@ -1,4 +1,4 @@
-import z from 'zod/v4';
+import { z } from "zod/v4"
 
 export const signupSchema = z.object({
     name: z.string()
@@ -71,16 +71,12 @@ export const googleSignInSchema = z.object({
 
     googleId: z.string(),
 
-    photo: z.string()
+    image: z.string()
 
 
 })
 
 export const createRoom = z.object({
     roomId: z.number(),
-    name: z.string
+    name: z.string()
 })
-
-export type signupData = z.infer<typeof signupSchema>;
-export type signinData = z.infer<typeof signinSchema>;
-export type googleData = z.infer<typeof googleSignInSchema>

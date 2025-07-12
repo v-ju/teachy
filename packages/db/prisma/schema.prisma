@@ -14,7 +14,7 @@ model User {
   email          String
   password       String?
   googleId       String?
-  photo          String?
+  image          String?
   refreshToken   String?
   chats          Chat[]
   rooms          Room[]
