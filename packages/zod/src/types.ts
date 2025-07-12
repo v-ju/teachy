@@ -34,6 +34,7 @@ export const signupSchema = z.object({
 })
 
 export const signinSchema = z.object({
+
     email: z.email(),
 
     password: z.string()
@@ -51,10 +52,35 @@ export const signinSchema = z.object({
         .regex(/[a-z]/,"Password must include atleast one lowercase letter.")
         .regex(/\d/,"Password must include atleast one digit.")
         .regex(/[!@#$%&*?]/,"Password must include atleast one special character.")
-        .optional()
+})
+
+export const googleSignInSchema = z.object({
+    name: z.string()
+        .min(2,{error: (issue) => {
+                if (issue.code === "too_small") {
+                return `Value must be >${issue.minimum}`
+            }}
+        })
+        .max(15, {error: (issue) => {
+            if (issue.code === 'too_big') {
+                return `Value must be <${issue.maximum}`
+            }}
+    }),
+
+    email: z.email(),
+
+    googleId: z.string(),
+
+    photo: z.string()
+
+
 })
 
 export const createRoom = z.object({
     roomId: z.number(),
-    name: z.st
+    name: z.string
 })
+
+export type signupData = z.infer<typeof signupSchema>;
+export type signinData = z.infer<typeof signinSchema>;
+export type googleData = z.infer<typeof googleSignInSchema>
