@@ -53,6 +53,7 @@ export const authOptions:NextAuthOptions = {
   callbacks: {
 
     async signIn({user, account, profile}){
+      console.log("inside signIn callback")
       if (account?.provider === 'google'){
           const res = await axios.post('http://localhost:3001/google-signin',
             {
@@ -70,14 +71,14 @@ export const authOptions:NextAuthOptions = {
 
         user.accessToken = data.accessToken;
         user.expiresIn = data.expiresIn;
-
+        console.log("checkpoint 1")
         return true;
       } 
       return true; 
     },
 
     async jwt({ token, user}) {
-
+      console.log("inside jwt callback")
       if (user) {
         token.id = user.id;
         token.accessToken = user.accessToken;
@@ -107,6 +108,7 @@ export const authOptions:NextAuthOptions = {
     },
 
     async session({ session, token }) {
+      console.log("inside session callback")
       session.user.accessToken = token.accessToken;
       session.user.id = token.id
       return session;
@@ -116,8 +118,8 @@ export const authOptions:NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
-  pages: {
-    signIn: '/login',
-  },
+  // pages: {
+  //   signIn: '/login',
+  // },
   secret: process.env.NEXTAUTH_SECRET
 };
