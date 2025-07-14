@@ -12,16 +12,19 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
+    "@tailwindcss/postcss": "^4.1.11",
     "axios": "^1.10.0",
     "next": "^15.3.0",
     "next-auth": "^4.24.11",
+    "postcss": "^8.5.6",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "@repo/shared": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@repo/zod": "workspace:*",
     "@types/node": "^22.15.3",
     "@types/react": "19.1.0",

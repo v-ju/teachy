@@ -1,24 +1,18 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+@import "tailwindcss";
 
 html,
 body {
-  max-width: 100vw;
+  max-width: 2500px;
   overflow-x: hidden;
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
+  background: radial-gradient(
+    circle at top left,
+    #f9d4b4 10%,    /* Light purple-peach center */
+    #a47ad1 30%,   /* Mid violet */
+    #303672 70% ,  /* Deep purple/black outer edge */
+    #070911 100%
+  );
+
 }
 
 * {
@@ -32,19 +26,10 @@ a {
   text-decoration: none;
 }
 
-.imgDark {
-  display: none;
+@theme {
+  --color-light-yellow: #f9d4b4;
+  --color-purple: #a47ad1;
+  --color-deep-purple: #303672;
+  --color-blue-black: #070911;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-
-  .imgLight {
-    display: none;
-  }
-  .imgDark {
-    display: unset;
-  }
-}

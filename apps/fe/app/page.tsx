@@ -1,11 +1,10 @@
-'use client';
-
-import { signIn } from 'next-auth/react';
+import Header from "../components/Header";
 
 export default function LandingPage() {
   return (
-    <button onClick={() => signIn()}>
-      Login
-    </button>
+    <div className='w-screen h-screen'>
+      <Header/>  
+    
+    </div>
   );
 }

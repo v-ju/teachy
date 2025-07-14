@@ -1,0 +1,33 @@
+<svg width="10" height="10" viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Chalk-like filter -->
+    <filter id="chalk">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2"/>
+    </filter>
+
+    <!-- Embedded Gloria Hallelujah font in base64 -->
+    <style type="text/css">
+      @font-face {
+        font-family: 'Gloria Hallelujah';
+        src: url('data:font/woff2;charset=utf-8;base64,d09GMgABAAAAAAZsABIAAAABY... [TRUNCATED]');
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      .chalk-text {
+        font-family: 'Gloria Hallelujah', cursive;
+        font-size: 64px;
+        fill: white;
+        letter-spacing: -3px;
+        filter: url(#chalk);
+      }
+    </style>
+  </defs>
+
+  <!-- Transparent background -->
+  
+
+  <!-- Text with chalk style -->
+  <text x="100" y="10" class="chalk-text" text-anchor="middle">teachy.</text>
+</svg>
