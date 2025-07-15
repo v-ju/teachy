@@ -2,22 +2,25 @@ import Image from "next/image";
 
 export default function Header() {
     return (
-        <header className="h-20">
-            <nav className="flex">
-                <div className="flex-1">
-                    <Image alt="logo" src='/mainlogo.png' width={100} height={100}  />     
-                </div>
-               
-                <div>
-                    <button>
-                        Login
-                    </button>
-                    <button>
-                        Join Now
-                    </button>
-                </div>
-            </nav>
-           
-        </header>
+        <div className="flex justify-center items-center ">
+            <div className="border-transparent rounded-2xl  flex h-20 w-3/4 mt-2 ">
+                <nav className="flex my-auto w-full">
+                    <div className="flex-1">
+                        <Image alt="logo" src='/mainlogo.png' width={140} height={140} className="my-1 mx-5"/>  
+                    </div>   
+                
+                    <div className="my-auto">
+                        <button className="my-1 mx-4">
+                            Login
+                        </button>
+                        <button className="my-1 mx-4">
+                            Register
+                        </button>
+                    </div>
+                </nav>
+            </div>            
+        </div>        
     )
 }
+
+

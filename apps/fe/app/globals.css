@@ -5,20 +5,15 @@ body {
   max-width: 2500px;
   overflow-x: hidden;
 
-  background: radial-gradient(
-    circle at top left,
-    #f9d4b4 10%,    /* Light purple-peach center */
-    #a47ad1 30%,   /* Mid violet */
-    #303672 70% ,  /* Deep purple/black outer edge */
-    #070911 100%
-  );
+  padding: 0;
+  margin: 0;
+
+  
 
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 a {
@@ -33,3 +28,14 @@ a {
   --color-blue-black: #070911;
 }
 
+
+
+@utility landing-bg {
+  background-image: radial-gradient(
+    circle at top left,
+    #f9d4b4 10%,
+    #a47ad1 30%,
+    #303672 70%,
+    #070911 100%
+  );
+}
