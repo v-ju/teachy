@@ -4,11 +4,9 @@ import { useState } from "react"
 
 
 interface InputBox  {
-    width: number | string,
     placeholder:string
     type: string
     viewIcon? : boolean
-   
 }
 
 
@@ -19,7 +17,7 @@ export default function InputBox(props:InputBox){
     const inputType = props.type === "password" && props.viewIcon ? (type ? "text" : "password" ) : props.type
 
     return (
-        <div className={`relative w-80  my-2`}>
+        <div className={`relative w-80 my-3`}>
             
             <input
                 placeholder={props.placeholder}

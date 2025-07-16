@@ -39,3 +39,26 @@ a {
     #070911 100%
   );
 }
+
+
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+  
+}
+
+@theme {
+  @keyframes border-rotate {
+    to {
+      --border-angle: 360deg;
+      
+    }
+  }
+
+  @keyframes green-glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 10px rgba(164,122,209,0.4), 0 0 20px rgba(164,122,209,0.1);
+    } 
+  }
+}

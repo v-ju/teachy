@@ -1,4 +1,5 @@
 import Image from "next/image";
+import LoginButton from "./HomeButton";
 
 export default function Header() {
     return (
@@ -9,13 +10,8 @@ export default function Header() {
                         <Image alt="logo" src='/mainlogo.png' width={140} height={140} className="my-1 mx-5"/>  
                     </div>   
                 
-                    <div className="my-auto">
-                        <button className="my-1 mx-4">
-                            Login
-                        </button>
-                        <button className="my-1 mx-4">
-                            Register
-                        </button>
+                    <div className="my-auto mx-5">
+                        <LoginButton/>
                     </div>
                 </nav>
             </div>            
