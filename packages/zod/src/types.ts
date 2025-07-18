@@ -30,7 +30,7 @@ export const signupSchema = z.object({
         .regex(/[a-z]/,"Password must include atleast one lowercase letter.")
         .regex(/\d/,"Password must include atleast one digit.")
         .regex(/[!@#$%&*?]/,"Password must include atleast one special character.")
-        .optional()
+        
 })
 
 export const signinSchema = z.object({
@@ -72,11 +72,10 @@ export const googleSignInSchema = z.object({
     googleId: z.string(),
 
     image: z.string()
-
-
 })
 
 export const createRoom = z.object({
     roomId: z.number(),
     name: z.string()
 })
+
