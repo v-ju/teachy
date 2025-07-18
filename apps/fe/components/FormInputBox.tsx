@@ -1,12 +1,13 @@
 "use client"
 import Image from "next/image"
 import { useState } from "react"
-
+import { UseFormRegisterReturn } from "react-hook-form"
 
 interface InputBox  {
     placeholder:string
     type: string
     viewIcon? : boolean
+    register: UseFormRegisterReturn
 }
 
 
@@ -23,6 +24,7 @@ export default function InputBox(props:InputBox){
                 placeholder={props.placeholder}
                 type={inputType}
                 className="bg-white border pr-10 p-3 border-gray-400 rounded-xl w-full "
+                {...props.register}
             />
 
         

@@ -2,6 +2,8 @@
 interface FormButtonProps {
     text: string
     width: string | number
+    type: "button" | "submit"
+    onClick?: () => void
 }
 
 export default function FormButton(props:FormButtonProps){
