@@ -1,13 +1,11 @@
 import AuthForm from "../../components/AuthForm";
 
-export default function SignIn(){
+export default async function SignIn(){
     return(
         <div className="w-screen h-screen">
            
-                <AuthForm/>
+            <AuthForm/>
             
         </div>
-    )
-        
-        
+    )        
 }

@@ -103,12 +103,22 @@ export const authOptions:NextAuthOptions = {
         token.accessTokenExpires = Date.now() + res.data.expiresIn * 1000;
       } catch (err) {
         console.error("Refresh token failed", err);
+        return {...token,
+          error: "RefreshAccessTokenError",};
       }
 
      return token;
     },
 
     async session({ session, token }) {
+
+      if (token.error === "RefreshAccessTokenError") {
+        return {
+          ...session,
+          user: undefined,
+          error: "SessionExpired",
+        } 
+      }
       console.log("inside session callback")
       session.user.accessToken = token.accessToken;
       session.user.id = token.id

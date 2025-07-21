@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LoginButton from "./HomeButton";
+import Button from "./GenericButton";
 
 export default function Header() {
     return (
@@ -11,7 +11,7 @@ export default function Header() {
                     </div>   
                 
                     <div className="my-auto mx-5">
-                        <LoginButton/>
+                        <Button text="Login" variant="login"/>
                     </div>
                 </nav>
             </div>            
