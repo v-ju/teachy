@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -23,6 +24,7 @@ model User {
 
 model Room {
   id          Int         @id   @default(autoincrement())
+  name        String      @unique
   slug        String      @unique       
   adminId     String     
   admin       User        @relation(fields: [adminId],references: [id])

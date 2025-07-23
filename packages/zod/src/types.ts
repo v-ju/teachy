@@ -74,8 +74,7 @@ export const googleSignInSchema = z.object({
     image: z.string()
 })
 
-export const createRoom = z.object({
-    roomId: z.number(),
+export const createRoomSchema = z.object({
     name: z.string()
 })
 
