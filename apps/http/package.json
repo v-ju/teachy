@@ -19,7 +19,8 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@repo/shared":"workspace:*",
     "@repo/db":"workspace:*",
-    "@repo/zod":"workspace:*"
+    "@repo/zod":"workspace:*",
+    "@repo/types": "workspace:*"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

@@ -103,6 +103,9 @@ importers:
       '@repo/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      '@repo/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
