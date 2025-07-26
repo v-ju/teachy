@@ -6,6 +6,6 @@ const roomRouter:Router = Router()
 
 roomRouter.post('/room', authMiddleware, createRoom)
 
-roomRouter.get("/:roomId", authMiddleware, getRoom)
+roomRouter.get("/:roomId", getRoom)
 
 export default roomRouter

@@ -1,4 +1,4 @@
-import { RoomCanvas } from "../../../components/RoomCanvas"
+import { CanvasConnect } from "../../../components/CanvasConnect"
 
 
 
@@ -7,6 +7,6 @@ export default async function Canvas({params} : {params : {roomId : string}}){
     const roomId = (await params).roomId
    
 
-    return <RoomCanvas roomId={roomId}/>
+    return <CanvasConnect roomId={roomId}/>
     
 }
