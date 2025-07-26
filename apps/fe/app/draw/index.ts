@@ -1,8 +1,5 @@
 import axios from "axios"
 
-
-
-
 type Shape = {
     type: "rect"
     x: number
@@ -16,18 +13,24 @@ type Shape = {
     radius: number
 }
 
-
-
-
-
-export async function initDraw(canvas: HTMLCanvasElement,roomId:string ){
+export async function initDraw(canvas: HTMLCanvasElement,roomId:string, socket: WebSocket ){
 
     const ctx = canvas.getContext("2d")
     //stores all the shapes we draw in a session
     let existingShapes:Shape[] = await getExistingShapes(roomId)
-
+    
+    console.log(existingShapes)
     if(!ctx) {
         return
+    }
+
+    socket.onmessage = (event) => {
+        const message = JSON.parse(event.data)
+        if(message.type === "chat"){
+            const parsedShape = JSON.parse(message.message)
+            existingShapes.push(parsedShape.shape)
+            clearCanvas(existingShapes,canvas,ctx)
+        }
     }
 
     clearCanvas(existingShapes,canvas, ctx)
@@ -48,13 +51,20 @@ export async function initDraw(canvas: HTMLCanvasElement,roomId:string ){
         clicked = false
         const width = e.clientX - startX
         const height = e.clientY - startY
-        existingShapes.push({
+        const shape: Shape = {
             type: "rect",
             x: startX,
             y: startY,
             width,
             height
-        })
+        }
+        existingShapes.push(shape)
+
+        socket.send(JSON.stringify({
+            type: "chat",
+            message: JSON.stringify({shape}),
+            roomId
+        }))
 
     })
     
@@ -92,14 +102,17 @@ function clearCanvas(existingShapes: Shape[], canvas: HTMLCanvasElement ,ctx: Ca
 }
 
 async function getExistingShapes(roomId:string){
-    const res = await axios.get(`http://localhost:3001/${roomId}`)
+    try{
+    const res = await axios.get(`http://localhost:3001/dashboard/${roomId}`)
     const messages = res.data.messages
 
-    const shapes = messages.map((shape : {message :string}) => {
-        const shapeData = JSON.parse(shape.message)
-        return shapeData
+    const shapes = messages.map((x : {message :string}) => {
+        const shapeData = JSON.parse(x.message)
+        return shapeData.shape
     })
 
-    return shapes
+    return shapes}catch(err){
+        console.log(err)
+    }
 
 }

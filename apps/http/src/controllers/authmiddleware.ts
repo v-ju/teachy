@@ -3,7 +3,6 @@ import type {RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
 
 
-
 export const authMiddleware:RequestHandler = (req, res, next) => {
     const header = req.headers.authorization
     const token = header?.split(" ")[1]
@@ -22,3 +21,5 @@ export const authMiddleware:RequestHandler = (req, res, next) => {
     }
     
 }
+
+

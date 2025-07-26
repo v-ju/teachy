@@ -1,9 +1,8 @@
-import { NextFunction} from "express"
 import type {RequestHandler } from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import {googleSignInSchema, signinSchema, signupSchema} from '@repo/zod/schema'
-import prismaClient from '@repo/db/client'
+import {prismaClient} from '@repo/db/client'
 import {ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET} from '@repo/shared/config'
 
 
@@ -15,6 +14,7 @@ export const signup:RequestHandler = async(req, res) => {
     try{
         console.log("signup hit")
         const parsedData = signupSchema.safeParse(req.body)
+        console.log(req.body)
         if(!parsedData.success){
             res.status(403).json({error: "Invalid data!"})
             return 
@@ -28,7 +28,7 @@ export const signup:RequestHandler = async(req, res) => {
         })
 
         if(existingUser){
-            res.json(403).json({error: "User already exists! Please signin."})
+            res.status(403).json({error: "User already exists! Please signin."})
             return
         }
 

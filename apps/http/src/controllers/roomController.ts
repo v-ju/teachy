@@ -44,7 +44,7 @@ export const createRoom:RequestHandler = async(req, res) => {
             res.json({room})
             return
         }catch(err){
-            if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002"){
+            if (err instanceof Prisma.PrismaClientKnownRequestError ){
                 slug = createSlug()
                 continue;
             }

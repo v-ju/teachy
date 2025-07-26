@@ -1,25 +1,18 @@
-import { useEffect, useState } from "react"
-import { CanvasConnect } from "./CanvasConnect"
+"use client"
+import { useRef,useEffect} from "react";
+import { initDraw } from "../app/draw";
 
+export function RoomCanvas({roomId,socket} : {roomId : string, socket: WebSocket}){
+    //To interact with the canvas you need to get the "context" of the canvas, so use useEffect,useRef to get the reference of the canvas
+    const canvasRef = useRef<HTMLCanvasElement>(null);   
 
-
-export function RoomCanvas({roomId} : {roomId : string}){
-    const [socket, setSocket] = useState<WebSocket | null>(null)
-    useEffect(() => {
-        //whenver the ws conn opens i.e user actually connected to user then we set socket to ws
-        const ws = new WebSocket("ws://localhost:8080")
-        ws.onopen = () => {
-            setSocket(ws)
+    useEffect( () => {
+        if (canvasRef.current){
+            initDraw(canvasRef.current, roomId, socket)
         }
-    },[])
+    }, [canvasRef])
 
-    if(!socket){
-        return <div>
-            Connecting to server...
-        </div>
-    }
-
-    return <div>
-        <CanvasConnect roomId={roomId}/>
+    return <div className="">
+        <canvas ref={canvasRef} width={2000} height={800} />
     </div>
 }
