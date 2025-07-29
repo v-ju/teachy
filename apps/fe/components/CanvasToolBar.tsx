@@ -1,21 +1,21 @@
-
-import { IconButton } from './Iconbutton'
+import { ToolButton } from './ToolButton'
 import { Pencil, RectangleHorizontalIcon, Diamond, Circle, Minus, ArrowRight, Type, EraserIcon, Hand, MousePointer2, ImagePlusIcon} from 'lucide-react'
-import { Shape } from '../types'
 
-export function ToolBar({tool, setTool}: {tool:Shape, setTool: () => {}}){
+
+export function ToolBar(){
       
-    return <div className='flex'>    
-        <IconButton icon={<Hand/>} margin='mx-1' onClick={() => "hi"} title='Hand (panning tool)'/>
-        <IconButton icon={<MousePointer2/>} margin='mx-1' onClick={() => "hi"} title='Selection'/>
-        <IconButton icon={<RectangleHorizontalIcon/>} margin='mx-1' onClick={() => "hi"} title='Rectangle'/>
-        <IconButton icon={<Diamond/>} margin='mx-1' onClick={() => "hi"} title='Diamond'/>
-        <IconButton icon={<Circle/>} margin='mx-1' onClick={() => "hi"} title='Circle'/>
-        <IconButton icon={<ArrowRight/>} margin='mx-1' onClick={() => "hi"} title='Arrow'/>
-        <IconButton icon={<Minus/>} margin='mx-1' onClick={() => "hi"} title='Line'/>
-        <IconButton icon={<Pencil/>} margin='mx-1' onClick={() => "hi"} title='Draw'/>
-        <IconButton icon={<Type/>} margin='mx-1' onClick={() => "hi"} title='Text'/>
-        <IconButton icon={<EraserIcon/>} margin='mx-1' onClick={() => "hi"} title='Eraser'/>
-        <IconButton icon={<ImagePlusIcon/>} margin='mx-1' onClick={() => "hi"} title='Insert Image'/>
-    </div>
+    return <div className='flex absolute top-4 left-1/2 -translate-x-1/2 bg-white border border-gray-300 shadow-xl  text-white p-1 rounded-xl'>    
+            <ToolButton icon={<Hand color='black'/>} margin='mx-1' title='Hand (panning tool)' tool='pan'/>
+            <ToolButton icon={<MousePointer2 color='black'/>} margin='mx-1' title='Selection' tool='selector'/>
+            <ToolButton icon={<RectangleHorizontalIcon color='black'/>} margin='mx-1' title='Rectangle' tool='rect'/>
+            <ToolButton icon={<Diamond color='black'/>} margin='mx-1' title='Diamond' tool='diamond'/>
+            <ToolButton icon={<Circle color='black'/>} margin='mx-1' title='Circle' tool='circle'/>
+            <ToolButton icon={<ArrowRight color='black'/>} margin='mx-1'  title='Arrow' tool='arrow'/>
+            <ToolButton icon={<Minus color='black'/>} margin='mx-1' title='Line' tool='line'/>
+            <ToolButton icon={<Pencil color='black'/>} margin='mx-1' title='Draw' tool='draw'/>
+            <ToolButton icon={<Type color='black'/>} margin='mx-1' title='Text' tool='text'/>
+            <ToolButton icon={<EraserIcon color='black'/>} margin='mx-1' title='Eraser' tool='erase'/>
+            <ToolButton icon={<ImagePlusIcon color='black'/>} margin='mx-1' title='Insert Image' tool='image'/>
+        </div>
+    
 }
