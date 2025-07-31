@@ -11,7 +11,7 @@ import { Theme } from "./Theme";
 export function RoomCanvas({roomId,socket} : {roomId : string, socket: WebSocket}){
     //To interact with the canvas you need to get the "context" of the canvas, so use useEffect,useRef to get the reference of the canvas
     const canvasRef = useRef<HTMLCanvasElement>(null);   
-    const [tool, setTool] = useState<Tools>("selector")
+    
 
     useEffect( () => {
         if (canvasRef.current){
