@@ -3,7 +3,6 @@ import { useRef,useEffect, useState} from "react";
 import { initDraw } from "../app/draw";
 import { ToolBar } from "./CanvasToolBar";
 import { Sidebar } from "./CanvasSidebar";
-import { Tools } from "../state";
 import { ZoomButton } from "./ZoomButton";
 import { Redo } from "./UndoRedo";
 import { Theme } from "./Theme";
@@ -20,26 +19,11 @@ export function RoomCanvas({roomId,socket} : {roomId : string, socket: WebSocket
     }, [])
 
     return <div className="relative">
-
         <canvas ref={canvasRef} width={window.innerWidth} height={window.innerHeight} />
-
-        
         <ToolBar />   
-        
-        
-        
         <Sidebar/>
-       
-
-        
-        <ZoomButton/>
-        
-
-        
+        <ZoomButton canvasRef={canvasRef}/>
         <Redo/>
-        
-
         <Theme/>
-
     </div>
 }

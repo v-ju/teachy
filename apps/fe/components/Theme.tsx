@@ -1,5 +1,5 @@
 import {MoonIcon, SunIcon} from 'lucide-react'
-import { useThemeStore } from '../state'
+import { useThemeStore } from '../utils/state'
 
 
 export function Theme(){
