@@ -17,6 +17,7 @@
     "@types/ws": "^8.18.1",
     "axios": "^1.10.0",
     "lucide-react": "^0.525.0",
+    "nanoid": "^5.1.5",
     "next": "^15.3.0",
     "next-auth": "^4.24.11",
     "postcss": "^8.5.6",
