@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "../../lib/options";
+import { authOptions } from "../../utils/lib/options";
 import Button from "../../components/GenericButton";
 
 

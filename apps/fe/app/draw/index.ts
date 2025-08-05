@@ -1,59 +1,70 @@
-import { useScaleStore,useCanvasStore } from "../../state"
+import { clearCanvas, drawRect,zoomAtPoint } from "../../utils/helpers"
+import { useCanvasStore, useShapeStore, useToolStore } from "../../utils/state"
+import { ToolEventHandlers,Tools} from "../../utils/types"
 
+const toolHandlers:Partial<Record<Tools, ToolEventHandlers>> = {
+  "rect" : drawRect(), 
+}
 
 
 export async function initDraw(canvas: HTMLCanvasElement, roomId: string, socket: WebSocket) {
   const ctx = canvas.getContext("2d")
   if (!ctx) return
 
+  const shapes = useShapeStore.getState().shapes
+  clearCanvas(shapes,canvas,ctx)
+
   canvas.addEventListener("wheel",  (e) => {
+    console.log("wheel triggered")
     e.preventDefault()
     if(e.ctrlKey || e.metaKey){
+      const bounds = canvas.getBoundingClientRect()
+      const mouseX = e.clientX - bounds.left
+      const mouseY = e.clientY - bounds.top
 
-      const prevScale = useScaleStore.getState().scale
+      zoomAtPoint({
+        zoomAmount: -e.deltaY * 0.001,
+        mouseX,
+        mouseY,
+        canvas,
+        ctx
+      });
 
-      //on key press, deltaY store the amount of zoom
-      const zoomAmount = -e.deltaY * 0.001
-      const newZoom = Math.min(Math.max(0.1, prevScale + zoomAmount),5)
-
-      //change the origin to calculate the mouse point from where zoom begins
-      const mouseX = e.clientX - canvas.width / 2
-      const mouseY = e.clientY - canvas.height / 2
-
-      const {cameraX, cameraY} = useCanvasStore.getState()
-
-      //world coords calculated with old zoom, to gauge original postion in world
-      const worldXb = mouseX / prevScale + cameraX
-      const worldYb = mouseY / prevScale + cameraY
-
-      //calculate world coords with new zoom value
-      const worldX = mouseX / newZoom + cameraX
-      const worldY = mouseY / newZoom + cameraY
-
-      //update scale to newZoom value
-      useScaleStore.getState().setScale(newZoom)
-
-      const newCameraX = cameraX + (worldXb - worldX)
-      const newCameraY = cameraY + (worldYb - worldY)
-
-      useCanvasStore.getState().setCamera(newCameraX,newCameraY )
     }else {
-      const {scale} = useScaleStore.getState()
+      const {scale} = useCanvasStore.getState()
       const {cameraX, cameraY, setCamera} = useCanvasStore.getState()
       const newWorldPanX = cameraX + e.deltaX / scale
       const newWorldPanY = cameraY + e.deltaY / scale
       setCamera(newWorldPanX, newWorldPanY)
+      const shapes = useShapeStore.getState().shapes
+      clearCanvas(shapes,canvas,ctx)
+      console.log(scale,cameraX, cameraY,newWorldPanX, newWorldPanY)
     }
+  },{ passive: false })
 
+  canvas.addEventListener("mousedown", (e) => {
+    const tool = useToolStore.getState().currentTool
+    toolHandlers[tool]?.onMouseDown(e,canvas,ctx)
+  })
+   canvas.addEventListener("mousemove", (e) => {
+    const tool = useToolStore.getState().currentTool
+    toolHandlers[tool]?.onMouseMove(e,canvas,ctx)
   })
 
-
-
+   canvas.addEventListener("mouseup", (e) => {
+    const tool = useToolStore.getState().currentTool
+    toolHandlers[tool]?.onMouseUp(e,canvas,ctx)
+  })
 }
  
 
-function shapeMouseEvents(canvas:HTMLCanvasElement){
-  canvas.addEventListener("mousedown",(e) => {})
-  canvas.addEventListener("mousemove", (e) => {})
-  canvas.addEventListener("mouseup", (e) => { })
-}
+
+
+
+
+
+
+
+
+
+
