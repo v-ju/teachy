@@ -79,6 +79,7 @@ type strokeStyle = "solid" | "dashed" | "dotted" | "handdrawn";
 type strokeWidth = 1 | 2 | 4
 type strokeColor = "#1e1e1e" | "#e03131" | "#2f9e44" | "#1971cD" | "#f08c00"
 type fillColor = "#ffc9c9" | "#b2f2bb" | "#a5d8ff" | "#ffec99"
+
 export type Button = {
   icon: ReactNode
   margin?: string
@@ -102,8 +103,6 @@ export type Tools = "pan" | "selector" | "rect" | "diamond" | "circle" | "arrow"
 export type ToolStore = {
     currentTool: Tools
     setTool: (tool: Tools) => void
-    selectedShapeId : string | null
-    setSelectedShapeId: (id:string) => void
 }
 
 export type Theme = {
@@ -128,6 +127,8 @@ export type CanvasStore = {
 export type ShapeStore = {
     shapes: Shape[]
     addShape: (shape: Shape) => void
+    selectedShapeId : string | null
+    setSelectedShapeId: (id:string | null) => void
 }
 
 export type StyleStore = {

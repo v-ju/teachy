@@ -8,8 +8,7 @@ export const useToolStore = create<ToolStore>(
     (set) => ({
         currentTool: "selector",
         setTool: (tool) => set({currentTool : tool}),
-        selectedShapeId: null ,
-        setSelectedShapeId: (id) => set({selectedShapeId: id})
+        
     })
 ) 
 
@@ -37,7 +36,9 @@ export const useCanvasStore = create<CanvasStore>((set,get) => ({
 
 export const useShapeStore = create<ShapeStore>((set) => ({
     shapes: [],
-    addShape: (shape: Shape) => set((s) => ({shapes: [...s.shapes,shape]}))
+    addShape: (shape: Shape) => set((s) => ({shapes: [...s.shapes,shape]})),
+    selectedShapeId: null ,
+    setSelectedShapeId: (id) => set({selectedShapeId: id})
 }))
 
 export const useStyleStore = create<StyleStore>((set) => ({

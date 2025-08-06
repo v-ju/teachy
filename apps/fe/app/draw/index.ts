@@ -1,9 +1,10 @@
-import { clearCanvas, drawRect,zoomAtPoint } from "../../utils/helpers"
+import { clearCanvas, drawRect,selectorTool,zoomAtPoint } from "../../utils/helpers"
 import { useCanvasStore, useShapeStore, useToolStore } from "../../utils/state"
 import { ToolEventHandlers,Tools} from "../../utils/types"
 
 const toolHandlers:Partial<Record<Tools, ToolEventHandlers>> = {
   "rect" : drawRect(), 
+  "selector" : selectorTool()
 }
 
 

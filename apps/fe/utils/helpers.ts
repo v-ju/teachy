@@ -13,6 +13,66 @@ export function screenToWorldCoords(e: MouseEvent, canvas: HTMLCanvasElement, ca
   return [worldShapeCoordX, worldShapeCoordY]
 }
 
+function drawSelectionOutline(shape:Shape, ctx:CanvasRenderingContext2D) {
+  ctx.save();
+  ctx.strokeStyle = "blue";
+  ctx.lineWidth = 1;
+  if (shape.type === "rect"){
+    const { cameraX, cameraY, scale } = useCanvasStore.getState()
+
+    const screenX = (shape.x - cameraX) * scale
+    const screenY = (shape.y - cameraY) * scale
+    const screenWidth = shape.width * scale
+    const screenHeight = shape.height * scale
+    ctx.strokeRect(screenX - 8, screenY - 8, screenWidth + 16, screenHeight + 16);
+
+    ctx.restore();
+
+    const handlePoints = [
+      { x: screenX-12, y: screenY - 12},                                // top-left
+      { x: screenX + screenWidth + 4 , y: screenY - 12 },                        // top-right
+      { x: screenX + screenWidth + 4, y: screenY + screenHeight + 4 },               // bottom-right
+      { x: screenX -12, y: screenY + screenHeight + 4},                       // bottom-left
+    ];
+
+    const rotationHandle = {
+      x: screenX - 8 + (screenWidth + 16) / 2,
+      y:  screenY - 30,
+      r: 5
+    };
+
+    // Draw square handles
+    ctx.fillStyle = "white";
+    ctx.strokeStyle = "blue";
+    handlePoints.forEach(p => {
+      ctx.fillRect(p.x  ,p.y  , 8, 8);
+      ctx.strokeRect(p.x  , p.y , 8, 8);
+    });
+
+    // Draw rotation handle
+    ctx.beginPath();
+    ctx.arc(rotationHandle.x, rotationHandle.y, rotationHandle.r, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+  }
+ 
+}
+
+export function getShapeWithCoords(x:number, y:number): Shape | null{
+  const shapes = useShapeStore.getState().shapes
+  const revereseShapeArray = shapes.reverse()
+  const selectedShape = revereseShapeArray.find((shape) => { if(shape.type === "rect") {
+      return (x >= shape.x &&
+        x <= shape.x + shape.width && 
+        y >= shape.y &&
+        y <= shape.y + shape.height
+      )
+    }
+    return false
+  })
+  return selectedShape ?? null
+}
+
 export function drawShape(ctx: CanvasRenderingContext2D, draftShape:Shape){
   
   if(draftShape.type === "rect"){
@@ -46,9 +106,16 @@ export function drawShape(ctx: CanvasRenderingContext2D, draftShape:Shape){
 export function clearCanvas(shapes:Shape[],canvas: HTMLCanvasElement, ctx:CanvasRenderingContext2D){
 
   ctx.clearRect(0, 0, canvas.width, canvas.height)
+  // const currentTool = useToolStore.getState().currentTool
+  const {selectedShapeId} = useShapeStore.getState()
+  // console.log(currentTool)
   console.log(shapes)
-  shapes.map((shape) => {
+  shapes.forEach((shape) => {
     drawShape(ctx,shape)
+    if (shape.id === selectedShapeId) {
+      drawSelectionOutline(shape, ctx);
+    }
+
   })
 }
 
@@ -149,13 +216,17 @@ export function drawRect():ToolEventHandlers {
       isDrawing = false
       useShapeStore.getState().addShape(draftShape)
       const shapes = useShapeStore.getState().shapes
-      clearCanvas(shapes,canvas,ctx)
-      useToolStore.getState().setSelectedShapeId(draftShape.id)
+      useShapeStore.getState().setSelectedShapeId(draftShape.id)
       useToolStore.getState().setTool("selector")
+      const currentTool = useToolStore.getState().currentTool
+      console.log(currentTool)
+      clearCanvas(shapes,canvas,ctx)
       
     }
   }
 }
+
+
 
 export function zoomAtPoint({zoomAmount,mouseX, mouseY,canvas,ctx}:{zoomAmount:number,mouseX:number, mouseY:number, canvas:HTMLCanvasElement,ctx:CanvasRenderingContext2D}){
     const {scale:prevScale, cameraX, cameraY,setScale,setCamera} = useCanvasStore.getState()
@@ -211,8 +282,26 @@ export function centerOnManualZoom({canvas,zoomDirection,ctx}:{canvas:HTMLCanvas
 
 }
 
-export function selectShape({e}:{e:MouseEvent}){
-
-  const mouseX = e.clientX
-  const mouseY = e.clientY
+export function selectorTool():ToolEventHandlers{
+  return {
+    onMouseDown(e,canvas,ctx){
+        console.log("selectorToolmousedown trig")
+      const {cameraX,cameraY,scale} = useCanvasStore.getState()
+      const {setSelectedShapeId,shapes} = useShapeStore.getState()
+      const [clickedX, clickedY] = screenToWorldCoords(e,canvas,cameraX,cameraY,scale)
+      const selectedShape = getShapeWithCoords(clickedX, clickedY)
+      const currentTool = useToolStore.getState().currentTool
+      console.log(currentTool)
+      if(selectedShape){
+        setSelectedShapeId(selectedShape.id)
+      }else {
+        setSelectedShapeId(null)
+      }
+      clearCanvas(shapes,canvas,ctx)
+    },
+    onMouseMove(e,canvas,ctx){
+      
+    },
+    onMouseUp(e,canvas,ctx){}
+  }
 }
